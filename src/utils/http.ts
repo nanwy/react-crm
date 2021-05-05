@@ -18,7 +18,7 @@ export const http = async (endpoint: string, { data, token, headers, ...options 
     ...options
   }
 
-  if (config.method.toUpperCase() == 'GET') {
+  if (config.method.toUpperCase() === 'GET') {
     endpoint += `?${qs.stringify(data)}`
   } else {
     config.body = JSON.stringify(data || {})
@@ -42,3 +42,11 @@ export const useHttp = () => {
   const { user } = useAuth()
   return (...[endpoint, config]: Parameters<typeof http>) => http(endpoint, { ...config, token: user?.token })
 }
+
+// Omit 删除某个类型  partial 让类型变为可选
+
+// type PartialWY<T> = {
+  // [P in keyof T]?:T[P]
+// }
+// 
+// type age = Exclude<Config,'data'>
