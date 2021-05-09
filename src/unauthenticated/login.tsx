@@ -4,7 +4,7 @@ import { useAsync } from 'utils/useAsync'
 
 const LoginScreen = ({ onError }: { onError: (err: Error) => void }) => {
   const { login, user } = useAuth()
-  const { run, isLoading } = useAsync()
+  const { run, isLoading } = useAsync(undefined, { isShowError: true })
   const handleSubmit = async (values: { username: string; password: string }) => {
     try {
       await run(login(values)) //run内部消化catch了
