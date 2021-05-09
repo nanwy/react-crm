@@ -8,13 +8,16 @@ import left from 'assets/left.svg'
 import right from 'assets/right.svg'
 export const Unauthenticated = () => {
   const [isRegister, setIsRegister] = useState(false)
+  const [error, setError] = useState<Error | null>()
+  console.log(error)
   return (
     <Container>
       <Header />
       <Background />
       <ShadowCard>
         <Title>{isRegister ? '请注册' : '请登录'}</Title>
-        {isRegister ? <RegisterScreen /> : <LoginScreen />}
+        {error ? error.message : null}
+        {isRegister ? <RegisterScreen onError={setError} /> : <LoginScreen onError={setError} />}
         <Divider />
         <Button type={'link'} onClick={() => setIsRegister(!isRegister)}>
           {isRegister ? '去登录' : '去注册'}

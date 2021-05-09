@@ -1,21 +1,20 @@
 import { User } from 'auth-provider'
 import React from 'react'
-import { Table } from 'antd'
+import { Table, TableProps } from 'antd'
 import dayjs from 'dayjs'
-interface Project {
+export interface Project {
   id: number
   name: string
-  personId: number
+  personId: string
   pin: boolean
   organization: string
   created: number
 }
 
-interface ListProps {
-  list: Project[]
+interface ListProps extends TableProps<Project> {
   users: User[]
 }
-const List = ({ list, users }: ListProps) => {
+const List = ({ users, ...props }: ListProps) => {
   const column = [
     {
       title: '名称',
@@ -41,7 +40,7 @@ const List = ({ list, users }: ListProps) => {
   ]
   return (
     <div>
-      <Table dataSource={list} columns={column} rowKey={(e: any) => e.id}></Table>
+      <Table columns={column} rowKey={(e: any) => e.id} {...props}></Table>
     </div>
   )
 }
