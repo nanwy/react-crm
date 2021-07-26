@@ -1,16 +1,17 @@
-import { useEffect } from "react"
-import { Project } from "view/project-list/list"
-import { useHttp } from "./http"
-import { useAsync } from "./useAsync"
+import { useAsync } from "utils/use-async";
+import { Project } from "screens/project-list/list";
+import { useEffect } from "react";
+import { cleanObject } from "utils/index";
+import { useHttp } from "utils/http";
 
-export const useProject = (param?: Partial<Project>) => {
-  const { run, ...result } = useAsync<Project[]>()
-  // const [list, setList] = useState([])
-  const client = useHttp()
+export const useProjects = (param?: Partial<Project>) => {
+  const client = useHttp();
+  const { run, ...result } = useAsync<Project[]>();
+
   useEffect(() => {
-    run(client('projects', { data: param }))
-    // console.log(list)
-    // .then(setList)
-  }, [param])
-  return result
-}
+    run(client("projects", { data: cleanObject(param || {}) }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [param]);
+
+  return result;
+};
